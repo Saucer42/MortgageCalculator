@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortgage Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="slider round"></span>
+        </label>
+        <span>Dark Mode</span>
+    </div>
+    
+    <div class="calculator-container">
+        <h1>Canadian Mortgage Calculator</h1>
+        
+        <div class="mortgage-type-toggle">
+            <button class="toggle-btn active" onclick="toggleMortgageType('new')">New Mortgage</button>
+            <button class="toggle-btn" onclick="toggleMortgageType('ported')">Ported + New</button>
+        </div>
+
+        <div class="calculator-grid">
+            <div class="input-section">
+                <!-- Ported Mortgage Section -->
+                <div id="portedMortgageSection" class="ported-section" style="display: none;">
+                    <h3>Ported Mortgage Details</h3>
+                    <div class="input-group">
+                        <label for="portedAmount">Ported Amount ($):</label>
+                        <input type="number" id="portedAmount" placeholder="Enter ported amount">
+                    </div>
+                    <div class="input-group">
+                        <label for="portedPayment">Current Monthly Payment ($):</label>
+                        <input type="number" id="portedPayment" step="0.01" placeholder="Enter current payment">
+                    </div>
+                    <div class="input-group">
+                        <label for="portedRate">Ported Interest Rate (%):</label>
+                        <input type="number" id="portedRate" step="0.01" placeholder="Enter ported rate">
+                    </div>
+                    <div class="input-group">
+                        <label for="portedTermRemaining">Remaining Term (months):</label>
+                        <input type="number" id="portedTermRemaining" placeholder="Enter remaining months">
+                    </div>
+                </div>
+
+                <!-- New Mortgage Section -->
+                <div id="newMortgageSection">
+                    <h3>New Mortgage Details</h3>
+                    <div class="input-group">
+                        <label for="loanAmount">New Loan Amount ($):</label>
+                        <input type="number" id="loanAmount" placeholder="Enter loan amount">
+                    </div>
+                    <div class="input-group">
+                        <label for="interestRate">New Interest Rate (%):</label>
+                        <input type="number" id="interestRate" step="0.01" placeholder="Enter interest rate">
+                    </div>
+                    <div class="input-group">
+                        <label for="loanTerm">Term Length (years):</label>
+                        <select id="loanTerm">
+                            <option value="5">5 Years</option>
+                            <option value="3">3 Years</option>
+                            <option value="1">1 Year</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="amortization">Amortization Period (years):</label>
+                        <select id="amortization">
+                            <option value="30">30 Years</option>
+                            <option value="25">25 Years</option>
+                            <option value="20">20 Years</option>
+                            <option value="15">15 Years</option>
+                            <option value="10">10 Years</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="calculateMortgage()">Calculate</button>
+                
+                <div class="result" id="result">
+                    <h2>Monthly Payments</h2>
+                    <div class="payment-breakdown">
+                        <div id="portedPaymentSection" style="display: none;">
+                            <p>Ported Payment: <span id="portedMonthlyPayment">$0.00</span></p>
+                        </div>
+                        <p>New Payment: <span id="monthlyPayment">$0.00</span></p>
+                        <p class="total-payment">Total Monthly Payment: <span id="totalMonthlyPayment">$0.00</span></p>
+                    </div>
+                    <div class="additional-info">
+                        <p>Total Payment Over Term: <span id="totalPayment">$0.00</span></p>
+                        <p>Total Interest Over Term: <span id="totalInterest">$0.00</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="graph-section">
+                <canvas id="amortizationChart"></canvas>
+            </div>
+
+            <div class="summary-section">
+                <h2>Mortgage Summary</h2>
+                <div class="summary-grid">
+                    <div class="summary-block">
+                        <h3>Scenario Details</h3>
+                        <div id="scenarioSummary"></div>
+                    </div>
+                    <div class="summary-block">
+                        <h3>Payment Schedule</h3>
+                        <div id="paymentSummary"></div>
+                    </div>
+                    <div class="summary-block">
+                        <h3>Key Dates</h3>
+                        <div id="datesSummary"></div>
+                    </div>
+                    <div class="summary-block">
+                        <h3>Assumptions</h3>
+                        <div id="assumptions"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
